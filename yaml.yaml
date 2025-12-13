@@ -1,0 +1,255 @@
+openapi: 3.1.1
+info:
+  title: Pricing Analytics API
+  version: 1.0.0
+  description: API para análises flexíveis de pricing (MC, faturamento, desconto, markup) + comparação entre períodos.
+servers:
+  - url: https://604af486e70f.ngrok-free.app
+
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+
+  /analytics/query:
+    post:
+      operationId: analyticsQuery
+      summary: Consulta analítica flexível de pricing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsQuery"
+      responses:
+        "200":
+          description: Resultado da consulta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsResponse"
+
+  /analytics/compare:
+    post:
+      operationId: analyticsCompare
+      summary: Compara uma métrica entre duas janelas (ex. últimos 90d vs 90d anteriores) ancoradas em um mês
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompareRequest"
+      responses:
+        "200":
+          description: Resultado da comparação
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompareResponse"
+
+  /segments/clients:
+    post:
+      operationId: segmentClients
+      summary: Segmenta clientes por faturamento mensal mínimo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientSegmentRequest"
+      responses:
+        "200":
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientSegmentResponse"
+
+components:
+  schemas:
+    TimeWindow:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum: [rolling, range]
+          default: rolling
+        days:
+          type: integer
+          default: 90
+        start:
+          type: string
+          description: YYYY-MM-DD
+        end:
+          type: string
+          description: YYYY-MM-DD
+      required: [mode]
+
+    Filter:
+      type: object
+      properties:
+        field:
+          type: string
+        op:
+          type: string
+          enum: ["=", "!=", ">", ">=", "<", "<=", "in", "between", "like", "ilike"]
+        value:
+          description: Valor do filtro
+      required: [field, op, value]
+
+    Having:
+      type: object
+      properties:
+        metric:
+          type: string
+        op:
+          type: string
+          enum: ["=", "!=", ">", ">=", "<", "<="]
+        value:
+          type: number
+      required: [metric, op, value]
+
+    OrderBy:
+      type: object
+      properties:
+        metric:
+          type: string
+        dir:
+          type: string
+          enum: [asc, desc]
+          default: desc
+      required: [metric]
+
+    AnalyticsQuery:
+      type: object
+      properties:
+        time:
+          $ref: "#/components/schemas/TimeWindow"
+        filters:
+          type: array
+          items:
+            $ref: "#/components/schemas/Filter"
+        group_by:
+          type: array
+          items:
+            type: string
+        metrics:
+          type: array
+          items:
+            type: string
+        having:
+          type: array
+          items:
+            $ref: "#/components/schemas/Having"
+        order_by:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderBy"
+        limit:
+          type: integer
+          default: 200
+      required: [time]
+
+    AnalyticsResponse:
+      type: object
+      properties:
+        time_resolved:
+          type: object
+          properties:
+            start: { type: string }
+            end: { type: string }
+        group_by:
+          type: array
+          items: { type: string }
+        metrics:
+          type: array
+          items: { type: string }
+        rows:
+          type: array
+          items:
+            type: object
+
+    AnchorMonth:
+      type: object
+      properties:
+        year:
+          type: integer
+        month:
+          type: integer
+      required: [year, month]
+
+    CompareRequest:
+      type: object
+      properties:
+        anchor:
+          $ref: "#/components/schemas/AnchorMonth"
+        window_days:
+          type: integer
+          default: 90
+        filters:
+          type: array
+          items:
+            $ref: "#/components/schemas/Filter"
+        group_by:
+          type: array
+          items:
+            type: string
+        metric:
+          type: string
+          default: mc_percentual_ponderado
+      required: [anchor, window_days, metric]
+
+    CompareWindow:
+      type: object
+      properties:
+        start: { type: string }
+        end: { type: string }
+        value: { type: number }
+        rows:
+          type: array
+          items:
+            type: object
+
+    CompareResponse:
+      type: object
+      properties:
+        anchor: { type: string }
+        metric: { type: string }
+        current:
+          $ref: "#/components/schemas/CompareWindow"
+        previous:
+          $ref: "#/components/schemas/CompareWindow"
+        delta_abs: { type: number }
+        delta_pct: { type: number }
+        trend: { type: string }
+      required: [anchor, metric, current, previous, trend]
+
+    ClientSegmentRequest:
+      type: object
+      properties:
+        time:
+          $ref: "#/components/schemas/TimeWindow"
+        min_monthly_revenue:
+          type: number
+          default: 40000
+        uf:
+          type: string
+      required: [time, min_monthly_revenue]
+
+    ClientSegmentResponse:
+      type: object
+      properties:
+        time_resolved:
+          type: object
+          properties:
+            start: { type: string }
+            end: { type: string }
+        min_monthly_revenue: { type: number }
+        uf: { type: string }
+        clientes:
+          type: array
+          items: { type: string }
