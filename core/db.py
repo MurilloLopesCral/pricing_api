@@ -6,7 +6,6 @@ from utils.dbConn import test_db_connection
 
 
 def run_query(sql: str, params: list):
-    print(PG_DSN)
     if not test_db_connection(PG_DSN):
         raise RuntimeError("Banco indisponível")
 

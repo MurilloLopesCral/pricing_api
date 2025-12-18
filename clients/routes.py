@@ -82,9 +82,6 @@ def recurring_clients(
     sql += " HAVING " + " AND ".join(having_clauses)
     sql += " ORDER BY faturamento_total DESC"
 
-    print(sql)
-    print(params)
-
     rows = run_query(sql, params)
 
     return {

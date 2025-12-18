@@ -1,3 +1,5 @@
+# PYTHON
+
 # Python-generated files
 __pycache__/
 *.py[oc]
@@ -9,3 +11,32 @@ wheels/
 
 # Virtual environments
 .venv
+
+# NEXT.JS
+# node
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
