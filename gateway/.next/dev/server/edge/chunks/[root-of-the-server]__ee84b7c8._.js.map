@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/api/health/route.ts"],"sourcesContent":["export const runtime = 'edge';\r\n\r\nexport async function GET() {\r\n  return new Response(\r\n    JSON.stringify({ ok: true, source: 'ai-gateway' }),\r\n    { headers: { 'Content-Type': 'application/json' } }\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAO,MAAM,UAAU;AAEhB,eAAe;IACpB,OAAO,IAAI,SACT,KAAK,SAAS,CAAC;QAAE,IAAI;QAAM,QAAQ;IAAa,IAChD;QAAE,SAAS;YAAE,gBAAgB;QAAmB;IAAE;AAEtD"}}]
+}

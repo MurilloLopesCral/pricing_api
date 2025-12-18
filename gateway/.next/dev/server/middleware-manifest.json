@@ -1,0 +1,39 @@
+{
+  "version": 3,
+  "middleware": {},
+  "sortedMiddleware": [],
+  "functions": {
+    "/api/health/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/health/route_client-reference-manifest.js",
+        "server/edge/chunks/_next-internal_server_app_api_health_route_actions_c54a800d.js",
+        "server/edge/chunks/node_modules_next_dist_esm_9aba8e6c._.js",
+        "server/edge/chunks/node_modules_next_dist_compiled_e2fa1cdb._.js",
+        "server/edge/chunks/node_modules_next_dist_7bea040f._.js",
+        "server/edge/chunks/edge-wrapper_21acb23c.js",
+        "server/edge/chunks/[root-of-the-server]__ee84b7c8._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_45e50721.js"
+      ],
+      "name": "app/api/health/route",
+      "page": "/api/health/route",
+      "matchers": [
+        {
+          "regexp": "^/api/health(?:/)?$",
+          "originalSource": "/api/health"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "yTnsoqvsvRseCq2n0cdoL+Z158wJaDIlRuvPjzVT9RM=",
+        "__NEXT_PREVIEW_MODE_ID": "10d53228263ff651f9ca8658416bfc02",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "ccccb653e2318898c33752cec3461045fbd14a0c96776b8a4ede5f8e6f43abf0",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "44dd14c725c9913c6956d771519207bffd1abc00f18d6fe8d0d34f3637ec689f"
+      }
+    }
+  }
+}
