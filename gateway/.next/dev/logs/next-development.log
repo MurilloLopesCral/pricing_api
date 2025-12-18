@@ -1,5 +1,10 @@
-[00:00:02.364] Server  LOG      ✓ Ready in 1652ms
-[00:02:25.469] Server  LOG        Reload env: .env.local
-[00:02:36.595] Server  LOG        Reload env: .env.local
-[00:02:39.968] Server  LOG        Reload env: .env.local
-[00:02:46.648] Server  LOG        Reload env: .env.local
+[00:00:03.010] Server  LOG      ✓ Ready in 2.2s
+[00:00:32.369] Server  LOG     --- AI GATEWAY ---
+[00:00:32.370] Server  LOG     PATH: /analytics/query
+[00:00:32.373] Server  LOG     ENV: {
+  PRICING_API_URL: 'https://pricing-api-dluf.onrender.com',
+  HAS_PRICING_KEY: true,
+  HAS_AI_KEY: true
+}
+[00:00:32.373] Server  LOG     REQ KEY: gateway_ai_0ac635e5-3918-48ee-9691-7a2af208e372
+[00:00:32.380] Server  LOG     BODY: {"time":{"mode":"rolling","days":90}}

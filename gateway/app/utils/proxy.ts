@@ -14,12 +14,16 @@ export async function proxyToPricing(
     const apiKey = req.headers.get('x-api-key');
     console.log('REQ KEY:', apiKey);
 
-    if (apiKey !== process.env.AI_GATEWAY_KEY) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401 }
-      );
-    }
+    // if (apiKey !== process.env.AI_GATEWAY_KEY) {
+    //   return new Response(
+    //     JSON.stringify({ error: 'Unauthorized' }),
+    //     { status: 401 }
+    //   );
+    // }
+
+    console.log('HEADERS:', Object.fromEntries(req.headers));
+
+
 
     const body = await req.text();
     console.log('BODY:', body);
